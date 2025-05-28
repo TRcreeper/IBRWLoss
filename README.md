@@ -4,6 +4,15 @@
 
 This repository stores the code for the paper "A Loss Weighting Algorithm Based on In-batch Positive Sample Rankings for Dense Retrievers".
 
+### Experimental Environment
+The main experimental environment we used is as follows:
+- **Python Version**: 3.10
+- **PyTorch Version**: 2.1.0
+- **transformers Version**: 4.29.2
+- **faiss-gpu Version**: 1.7.2
+- **datasets Version**: 2.21.0
+- **numpy Version**: 1.26.3
+
 ## 1. Data Preparation
 1. **Downloading the data**:
 First, you need to download the data from the Passage ranking dataset on the webpage [https://microsoft.github.io/msmarco/Datasets.html](https://microsoft.github.io/msmarco/Datasets.html). Specifically, we will use `qrels.dev.tsv`, `qrels.train.tsv`, and `qidpidtriples.train.full.2.tsv.gz`.
