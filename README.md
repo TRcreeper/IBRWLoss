@@ -1,7 +1,6 @@
 # IBRWLoss
 ## A Loss Weighting Algorithm Based on In-batch Positive Sample Rankings for Dense Retrievers Code Repository
 
-
 This repository stores the code for the paper "A Loss Weighting Algorithm Based on In-batch Positive Sample Rankings for Dense Retrievers".
 
 ### Schematic diagram of loss weighting based on the ranking of positive document within a batch.
@@ -37,16 +36,17 @@ The pre-trained model `bert-base-uncased` should be placed in the `model` direct
 
 ## 3. Execution Steps
 1. First, run `tokenize.sh`.
-2. Then, run `BM25_hard.sh` to train a standard DPR.
+2. Then, run `BM25_hard.sh` to train and evaluate a standard DPR. (**BM25 hard**)
 3. Run `retrieve_training_set.sh` to retrieve the training set, preparing for the extraction of hard negative samples.
-4. Run `stdDPR_hard.sh` to train and evaluate our best model.
+4. Run `stdDPR_hard.sh` to train and evaluate our best model. (**stdDPR hard**)
+5. Run `Random_hard.sh` to train and evaluate random hard negative model. (**Random hard**)
 
 ## 4. Parameter Modification
 The three weighting parameters can be modified in `tevatron/modeling.py`. 
 
 ## Experimental Details
 In order to demonstrate the effectiveness of our approach, we conduct a series of experiments as follows:
-#### Experiment with Vanilla Dense Retriever DPR
+#### Experiment with Vanilla Dense Retriever DPR (BM25 hard)
 We carry out experiments on the vanilla dense retriever DPR with the assistance of Tevatron [cite:tevatron], which is an efficient large-scale neural retrieval tool.
 - **Dataset**: We utilize the officially provided training triplet data of the MS-MARCO Passage dataset. In this dataset, the negatives are hard negatives retrieved by BM25.
 - **Loss Weighting Algorithm and Parameters**: A batch-wise ranking-based loss weighting algorithm is employed. The specific parameters are set as $\alpha = 2.6$, $r = 1.8$, and $\sigma = 1.0$.
@@ -55,12 +55,12 @@ We carry out experiments on the vanilla dense retriever DPR with the assistance 
     - The learning rate is configured as $5 \times 10^{-6}$.
     - The training process runs for four epochs.
     - Constraints are applied with a maximum query length of 32 and a maximum passage length of 128.
-#### Experiment with Harder Negatives
+#### Experiment with Harder Negatives (stdDPR hard)
 We then investigate weighted loss training with harder negatives.
 - **Definition of stdDPR**: In this paper, we define the standard DPR which uses samples retrieved by BM25 as negatives as stdDPR.
 - **Retrieval and Retraining**: Using stdDPR, we perform retrieval sampling on the training set to update the original negatives. Then, we retrain the model using the same parameters as mentioned before (batch size of 16, learning rate of $5 \times 10^{-6}$, four epochs, maximum query length of 32, and maximum passage length of 128) to obtain the second model.
 - **Loss Weighting Parameters**: For this experiment, the loss weighting parameters are set to $\alpha = 2.8$, $r = 1.0$, and $\sigma = 2.0$.
-#### Experiment with Random Negatives
+#### Experiment with Random Negatives (Random)
 Finally, to comparatively show that our method is effective beyond hard negatives, we train a third model with batch-wise random negatives.
 - **Batch Size Setting**: The batch size is set to 128 to ensure that there are 127 negatives per batch, which is consistent with the prior two models.
 - **Loss Weighting**: We apply loss weighting with parameters $\alpha = 2.8$, $r = 0.5$, and $\sigma = 2.0$.
