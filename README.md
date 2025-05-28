@@ -39,7 +39,7 @@ The pre-trained model `bert-base-uncased` should be placed in the `model` direct
 2. Then, run `BM25_hard.sh` to train and evaluate a standard DPR. (**BM25 hard**)
 3. Run `retrieve_training_set.sh` to retrieve the training set, preparing for the extraction of hard negative samples.
 4. Run `stdDPR_hard.sh` to train and evaluate our best model. (**stdDPR hard**)
-5. Run `Random_hard.sh` to train and evaluate random hard negative model. (**Random hard**)
+5. Run `Random.sh` to train and evaluate random negative model. (**Random**)
 
 ## 4. Parameter Modification
 The three weighting parameters can be modified in `tevatron/modeling.py`. 
